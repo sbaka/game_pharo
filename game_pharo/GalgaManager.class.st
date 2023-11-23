@@ -29,10 +29,13 @@ GalgaManager >> currentBoardElement: aGalaBoardElement [
 ]
 
 { #category : #private }
-GalgaManager >> launch [ 
-	|board|
+GalgaManager >> launch [
+
+	| board |
 	self currentBoardElement: MygGalaBoardElement new.
-	board := MygGalaBoard createWithBoard: '#######
-	### @'.
+	board := MygGalaBoard createWithBoard: ((MygLevelImporter
+			           fromString: '#@$ . #'
+			           fromPackage: MygGalaBoard  package) do: [ :each |
+			          each configured ]).
 	self currentBoardElement openWithModel: board
 ]
