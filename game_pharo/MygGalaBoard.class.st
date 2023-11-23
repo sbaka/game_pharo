@@ -12,3 +12,9 @@ MygGalaBoard class >> createWithBoard: array [
 		configureGrid: array; 
 		yourself 
 ]
+
+{ #category : #'public api - configure' }
+MygGalaBoard >> configureGrid: aCTNewArray2D [
+
+	super configureGrid: aCTNewArray2D.
+]
