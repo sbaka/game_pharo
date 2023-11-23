@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #'default encoding' }
-MygGalaWall class >> textualMapCharacter [ 
+MygGalaWall class >> textualMapCharacter [
 
 	^ $#
 ]
