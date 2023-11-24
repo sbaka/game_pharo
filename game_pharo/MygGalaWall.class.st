@@ -13,5 +13,5 @@ MygGalaWall class >> textualMapCharacter [
 { #category : #accessing }
 MygGalaWall >> backgroundRepresentation [
 
-	^ MygSkBoxElement wallIcon
+	^ MygGalaBoxElement wallIcon
 ]
