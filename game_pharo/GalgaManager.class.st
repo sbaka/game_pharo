@@ -40,6 +40,9 @@ GalgaManager >> launch [
           
           
           
+          
+          
+          
      @    '
 			           fromPackage: MygGalaBoard  package) do: [ :each |
 			          each configured ]).
