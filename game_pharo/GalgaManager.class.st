@@ -37,10 +37,10 @@ GalgaManager >> launch [
 			           fromString: '          
           
           
+         #
           
           
-          
-     #    '
+     @    '
 			           fromPackage: MygGalaBoard  package) do: [ :each |
 			          each configured ]).
 	self currentBoardElement openWithModel: board
