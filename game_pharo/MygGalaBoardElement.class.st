@@ -129,9 +129,8 @@ MygGalaBoardElement >> initializeBackgroundLayer [
 	self board do: [ :aBox |
 		| boxElement tmpBox container |
 		tmpBox := aBox.
-		(aBox class inheritsFrom: MygSkMovable) ifTrue: [
-			tmpBox := aBox background ].
-		boxElement := (MygSkBoxElement box: tmpBox)
+		
+		boxElement := (MygGalaBoxElement box: tmpBox)
 			              positionInField: aBox position;
 			              board: board.
 		container := BlElement new
@@ -207,10 +206,10 @@ MygGalaBoardElement >> initializeForegroundLayer [
 	self addChild: layer.
 	self board do: [ :aBox |
 		| boxElement tmpBox container |
+		
 		tmpBox := aBox.
-		(aBox class inheritsFrom: MygSkMovable) ifFalse: [
-			tmpBox := MygSkGround new ].
-		boxElement := (MygSkBoxElement box: tmpBox)
+		
+		boxElement := (MygGalaBoxElement box: tmpBox)
 			              positionInField: aBox position;
 			              board: board.
 		container := BlElement new
