@@ -141,8 +141,7 @@ MygGalaBoxElement >> updateBackgroundColor [
 		
 		boardElement := self parent parent parent.
 		space := boardElement space.
-		size := space extent / boardElement board width
-		        - boardElement firstChild layout cellSpacing.
+		size := 5.
 		bg := bg scaledIntoFormOfSize: size ].
 	self background: bg
 ]
