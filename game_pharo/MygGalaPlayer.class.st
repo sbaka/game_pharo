@@ -1,6 +1,6 @@
 Class {
 	#name : #MygGalaPlayer,
-	#superclass : #MygGalaElement,
+	#superclass : #MygGalagaMovable,
 	#category : #'game_pharo'
 }
 
