@@ -5,12 +5,27 @@ Class {
 }
 
 { #category : #initialization }
-MygGalaBoard class >> createWithBoard: array [
+MygGalaBoard class >> createWithBoard: aCTNewArray2D [
 
 	^ self new 
-	
-		configureGrid: array; 
+		configureGrid: aCTNewArray2D; 
 		yourself 
+]
+
+{ #category : #'as yet unclassified' }
+MygGalaBoard class >> createWithBoard: aCTNewArray2D managedBy: aSkGameManager [
+
+	^ (self createWithBoard: aCTNewArray2D)
+		  gameManager: aSkGameManager;
+		  yourself
+]
+
+{ #category : #'as yet unclassified' }
+MygGalaBoard class >> importFromString: aString [
+	|tmp|
+	tmp := MygLevelImporter fromString: aString fromPackage: self package.
+	tmp width < tmp height ifTrue: [ tmp := tmp rotateLeft ].
+	^ tmp
 ]
 
 { #category : #'public api - configure' }
