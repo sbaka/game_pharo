@@ -39,3 +39,8 @@ MygGalaBoard >> do: aBlock [
 
 	grid do: aBlock
 ]
+
+{ #category : #accessing }
+MygGalaBoard >> width [
+	^ grid width
+]
