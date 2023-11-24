@@ -120,8 +120,8 @@ MygGalaBoardElement >> initializeBackgroundLayer [
 	layer := BlElement new
 		         background: Color transparent;
 		         layout: (BlGridLayout horizontal
-				          columnCount: 500;
-				          cellSpacing: 2);
+				          columnCount: 10;
+				          cellSpacing: 1);
 		         constraintsDo: [ :c |
 			         c horizontal matchParent.
 			         c vertical fitContent ].
@@ -199,8 +199,8 @@ MygGalaBoardElement >> initializeForegroundLayer [
 	layer := BlElement new
 		         background: Color transparent;
 		         layout: (BlGridLayout horizontal
-				          columnCount: 500;
-				          cellSpacing: 2);
+				          columnCount: 10;
+				          cellSpacing: 1);
 		         constraintsDo: [ :c |
 			         c horizontal matchParent.
 			         c vertical fitContent ].
