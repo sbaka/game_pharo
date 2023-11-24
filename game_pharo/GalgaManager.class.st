@@ -37,7 +37,7 @@ GalgaManager >> launch [
 			           fromString: '          
           
           
-         #
+          
           
           
      @    '
