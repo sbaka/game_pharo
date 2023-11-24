@@ -126,7 +126,7 @@ MygGalaBoardElement >> initializeBackgroundLayer [
 			         c horizontal matchParent.
 			         c vertical fitContent ].
 	self addChild: layer.
-	"self board do: [ :aBox |
+	self board do: [ :aBox |
 		| boxElement tmpBox container |
 		tmpBox := aBox.
 		(aBox class inheritsFrom: MygSkMovable) ifTrue: [
@@ -143,7 +143,7 @@ MygGalaBoardElement >> initializeBackgroundLayer [
 			             addChild: boxElement;
 			clipChildren: false.
 		layer addChild: container.
-		boxElement updateBackgroundColor ]."
+		boxElement updateBackgroundColor ].
 
 	self backgroundLayer: layer
 ]
@@ -205,7 +205,7 @@ MygGalaBoardElement >> initializeForegroundLayer [
 			         c horizontal matchParent.
 			         c vertical fitContent ].
 	self addChild: layer.
-	"self board do: [ :aBox |
+	self board do: [ :aBox |
 		| boxElement tmpBox container |
 		tmpBox := aBox.
 		(aBox class inheritsFrom: MygSkMovable) ifFalse: [
@@ -223,7 +223,7 @@ MygGalaBoardElement >> initializeForegroundLayer [
 			clipChildren: false.
 
 		layer addChild: container as: aBox position asString.
-		boxElement updateBackgroundColor ]."
+		boxElement updateBackgroundColor ].
 
 	self foregroundLayer: layer
 ]

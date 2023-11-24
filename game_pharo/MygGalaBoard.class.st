@@ -33,3 +33,9 @@ MygGalaBoard >> configureGrid: aCTNewArray2D [
 
 	super configureGrid: aCTNewArray2D.
 ]
+
+{ #category : #enumerating }
+MygGalaBoard >> do: aBlock [
+
+	grid do: aBlock
+]
