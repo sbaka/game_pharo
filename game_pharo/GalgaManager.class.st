@@ -11,7 +11,7 @@ Class {
 GalgaManager class >> importFromString: aString [
 
 	| tmp |
-	tmp := MygLevelImporter fromString: aString fromPackage: MygSkBoard package.
+	tmp := MygLevelImporter fromString: aString fromPackage: MygGalaBoard package.
 	tmp := tmp collect: [ :each | each configured ].
 	tmp width < tmp height ifTrue: [ tmp := tmp rotateLeft ].
 	^ tmp
@@ -34,7 +34,7 @@ GalgaManager >> launch [
 	| board |
 	self currentBoardElement: MygGalaBoardElement new.
 	board := MygGalaBoard createWithBoard: ((MygLevelImporter
-			           fromString: '                  '
+			           fromString: '####'
 			           fromPackage: MygGalaBoard  package) do: [ :each |
 			          each configured ]).
 	self currentBoardElement openWithModel: board
