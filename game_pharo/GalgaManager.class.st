@@ -10,7 +10,7 @@ Class {
 { #category : #'as yet unclassified' }
 GalgaManager class >> importFromString: aString [
 
-	| tmp |
+	| tmp galaga|
 	tmp := MygLevelImporter fromString: aString fromPackage: MygSkBoard package.
 	tmp := tmp collect: [ :each | each configured ].
 	tmp width < tmp height ifTrue: [ tmp := tmp rotateLeft ].
