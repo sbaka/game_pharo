@@ -12,11 +12,5 @@ MygGalaPlayer class >> textualMapCharacter [
 { #category : #accessing }
 MygGalaPlayer >> backgroundRepresentation [
 
-	^ MygGalaBoxElement playerUpIcon 
-]
-
-{ #category : #accessing }
-MygGalaPlayer >> facing [ 
-
-	^ MygSkBoxElement playerUpIcon
+	^ MygGalaBoxElement spaceShipIcon  
 ]
