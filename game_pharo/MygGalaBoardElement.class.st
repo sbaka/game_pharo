@@ -80,7 +80,7 @@ MygGalaBoardElement >> elementsToUpdateAtPosition: aPoint goingIn: aCpDirection 
 		            playerElement.
 		            neighborElement } asOrderedCollection.
 	(neighborElement board grid at: neighborElement positionInField)
-		class = MygSkWall ifFalse: [
+		class = MygGalaWall ifFalse: [
 		nextNeighborElement := (layer childNamed:
 			                       (aCpDirection * (aCpDirection * aPoint))
 				                       asString) firstChild.
@@ -162,9 +162,9 @@ MygGalaBoardElement >> initializeBackgroundLayerPreview [
 	self board do: [ :aBox |
 		| boxElement tmpBox container |
 		tmpBox := aBox.
-		(aBox class inheritsFrom: MygSkMovable) ifTrue: [
+		(aBox class inheritsFrom: MygGalagaMovable) ifTrue: [
 			tmpBox := aBox background ].
-		boxElement := (MygSkBoxElement box: tmpBox)
+		boxElement := (MygGalaBoxElement box: tmpBox)
 			              positionInField: aBox position;
 			              board: board.
 		container := BlElement new
@@ -183,10 +183,8 @@ MygGalaBoardElement >> initializeBackgroundLayerPreview [
 
 { #category : #initialization }
 MygGalaBoardElement >> initializeDirectionDict [
-
+"ajouté edem"
 	directionDict := {
-		        (#DOWN -> CpDirection south).
-		        (#UP -> CpDirection north).
 		        (#LEFT -> CpDirection west).
 		        (#RIGHT -> CpDirection east) } asDictionary.
 ]
@@ -242,9 +240,9 @@ MygGalaBoardElement >> initializeForegroundLayerPreview [
 	self board do: [ :aBox |
 		| boxElement tmpBox container |
 		tmpBox := aBox.
-		(aBox class inheritsFrom: MygSkMovable) ifFalse: [
-			tmpBox := MygSkGround new ].
-		boxElement := (MygSkBoxElement box: tmpBox)
+		(aBox class inheritsFrom: MygGalagaMovable) ifFalse: [
+			tmpBox := MygGalaGround new ].
+		boxElement := (MygGalaBoxElement box: tmpBox)
 			              positionInField: aBox position;
 			              board: board.
 		container := BlElement new

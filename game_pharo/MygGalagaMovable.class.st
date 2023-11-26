@@ -41,7 +41,7 @@ MygGalagaMovable >> defaultBackground [
 
 { #category : #accessing }
 MygGalagaMovable >> move: aCpDirection [
-
+"ajouté edem"
 	| newPosition neighbor |
 	newPosition := aCpDirection * self position.
 	neighbor := self board atPosition: newPosition.
@@ -50,19 +50,19 @@ MygGalagaMovable >> move: aCpDirection [
 
 { #category : #accessing }
 MygGalagaMovable >> moveEast [
-
+"ajouté edem"
 	^ self move: CpDirection east
 ]
 
 { #category : #accessing }
 MygGalagaMovable >> moveWest [
-
+"ajouté edem"
 	^ self move: CpDirection west
 ]
 
 { #category : #accessing }
 MygGalagaMovable >> position: aPoint [
-
+"ajouté edem"
 	position := aPoint.
 	self background position: aPoint
 ]
