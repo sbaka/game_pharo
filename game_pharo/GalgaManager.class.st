@@ -2,7 +2,9 @@ Class {
 	#name : #GalgaManager,
 	#superclass : #Object,
 	#instVars : [
-		'currentBoardElement'
+		'currentBoardElement',
+		'currentMoveCount',
+		'menu'
 	],
 	#category : #'game_pharo'
 }
@@ -28,23 +30,54 @@ GalgaManager >> currentBoardElement: aGalaBoardElement [
 	currentBoardElement := aGalaBoardElement 
 ]
 
+{ #category : #accessing }
+GalgaManager >> currentMoveCount [ 
+	
+	^ currentMoveCount 
+]
+
+{ #category : #accessing }
+GalgaManager >> currentMoveCount: aNumber [
+
+	currentMoveCount:= aNumber 
+]
+
+{ #category : #accessing }
+GalgaManager >> initialize [
+
+	super initialize.
+	currentMoveCount := 0.
+]
+
 { #category : #private }
 GalgaManager >> launch [
 
 	| board |
 	self currentBoardElement: MygGalaBoardElement new.
 	board := MygGalaBoard createWithBoard: ((MygLevelImporter
-			           fromString: '          
-          
-          
-          
-          
-          
-          
-          
-          
-     @ m  '
+			           fromString: '#m      m#
+#        #
+#   m    #
+#        #
+# m    m #
+#        #
+#        #
+#        #
+#        #
+#    @   #'
 			           fromPackage: MygGalaBoard  package) do: [ :each |
 			          each configured ]).
 	self currentBoardElement openWithModel: board
+]
+
+{ #category : #accessing }
+GalgaManager >> menu [ 
+
+	^ menu
+]
+
+{ #category : #accessing }
+GalgaManager >> menu: aToMenu [
+
+	menu := aToMenu
 ]

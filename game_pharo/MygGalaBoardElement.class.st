@@ -5,7 +5,8 @@ Class {
 		'board',
 		'backgroundLayer',
 		'foregroundLayer',
-		'directionDict'
+		'directionDict',
+		'modify'
 	],
 	#category : #'game_pharo'
 }
@@ -48,9 +49,9 @@ MygGalaBoardElement >> board: aGalaBoard [
 ]
 
 { #category : #initialization }
-MygGalaBoardElement >> boardPreview: aSkBoard [
+MygGalaBoardElement >> boardPreview: aGalaBoard [
 
-	board := aSkBoard.
+	board := aGalaBoard.
 	self loseFocus.
 	self constraintsDo: [ :c |
 		c frame vertical alignCenter.
@@ -80,7 +81,7 @@ MygGalaBoardElement >> elementsToUpdateAtPosition: aPoint goingIn: aCpDirection 
 		            playerElement.
 		            neighborElement } asOrderedCollection.
 	(neighborElement board grid at: neighborElement positionInField)
-		class = MygSkWall ifFalse: [
+		class = MygGalaWall ifFalse: [
 		nextNeighborElement := (layer childNamed:
 			                       (aCpDirection * (aCpDirection * aPoint))
 				                       asString) firstChild.
@@ -185,8 +186,8 @@ MygGalaBoardElement >> initializeBackgroundLayerPreview [
 MygGalaBoardElement >> initializeDirectionDict [
 
 	directionDict := {
-		        (#DOWN -> CpDirection south).
-		        (#UP -> CpDirection north).
+		        "(#DOWN -> CpDirection south).
+		        (#UP -> CpDirection north)."
 		        (#LEFT -> CpDirection west).
 		        (#RIGHT -> CpDirection east) } asDictionary.
 ]
@@ -242,9 +243,9 @@ MygGalaBoardElement >> initializeForegroundLayerPreview [
 	self board do: [ :aBox |
 		| boxElement tmpBox container |
 		tmpBox := aBox.
-		(aBox class inheritsFrom: MygSkMovable) ifFalse: [
-			tmpBox := MygSkGround new ].
-		boxElement := (MygSkBoxElement box: tmpBox)
+		(aBox class inheritsFrom: MygGalagaMovable ) ifFalse: [
+			tmpBox := MygGalaGround  new ].
+		boxElement := (MygGalaBoxElement  box: tmpBox)
 			              positionInField: aBox position;
 			              board: board.
 		container := BlElement new
@@ -262,7 +263,7 @@ MygGalaBoardElement >> initializeForegroundLayerPreview [
 	self foregroundLayer: layer
 ]
 
-{ #category : #initialization }
+{ #category : #'as yet unclassified' }
 MygGalaBoardElement >> manageEvent: anEvent [
 
 	| player moved direction neighborElement elements |
@@ -272,7 +273,7 @@ MygGalaBoardElement >> manageEvent: anEvent [
 	anEvent key name = #ESCAPE ifTrue: [
 		self space close.
 		^ self ].
-	board isFinished ifTrue: [ ^ self ].
+	"board isFinished ifTrue: [ ^ self ]."
 	player := self board player.
 	direction := self directionDict
 		             at: anEvent key name
@@ -281,10 +282,11 @@ MygGalaBoardElement >> manageEvent: anEvent [
 		            elementsToUpdateAtPosition: player position
 		            goingIn: direction.
 	moved := player move: direction.
-	"modify this part"
+	player backgroundRepresentation.
+
 	neighborElement := elements second.
-	"ici il faut changer MygSk box par MygGalaBox"
-	(moved and: [ neighborElement box class = MygSkBox ])
+
+	(moved and: [ neighborElement box class = MygGalaBoxElement ])
 		ifTrue: [
 			| animation |
 			animation := neighborElement boxAnimationMovingInDirection:
@@ -293,6 +295,21 @@ MygGalaBoardElement >> manageEvent: anEvent [
 					 neighborElement resetAnimation.
 					 self updateElements: elements ]) ]
 		ifFalse: [ self updateElements: elements ]
+]
+
+{ #category : #'as yet unclassified' }
+MygGalaBoardElement >> moveGalaSpaceShip: aSpaceShip direction: anEvt [ 
+|direction elements moved neighborElement| 
+2 timesRepeat: [     "Assuming 'move' is a method in your Player class that updates its position"   direction := self directionDict                      
+at: anEvt key name                      
+ifAbsent: [ ^ self ].     
+elements := self                     
+elementsToUpdateAtPosition: aSpaceShip position  
+goingIn: direction.     
+moved := aSpaceShip move: direction.
+neighborElement := elements second.    
+moved ifTrue: [self updateElements: elements ]. 
+  (Delay forSeconds: 0.1) wait.].
 ]
 
 { #category : #'as yet unclassified' }
