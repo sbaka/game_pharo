@@ -135,6 +135,23 @@ MygGalaBoxElement >> box: aSkElement [
 	box := aSkElement.
 ]
 
+{ #category : #accessing }
+MygGalaBoxElement >> boxAnimationMovingInDirection: aCpDirection [
+
+	^ (BlTransformAnimation translate:
+		   aCpDirection * (0 @ 0) * self width) duration: 150 milliSeconds
+]
+
+{ #category : #accessing }
+MygGalaBoxElement >> boxForForeground [
+
+	self box:
+		(((self board atPosition: self positionInField) class inheritsFrom:
+			  MygGalagaMovable)
+			 ifFalse: [ MygGalaGround new ]
+			 ifTrue: [ (self board atPosition: self positionInField) ])
+]
+
 { #category : #'as yet unclassified' }
 MygGalaBoxElement >> initialize [
 
@@ -159,6 +176,25 @@ MygGalaBoxElement >> positionInField: aPoint [
 ]
 
 { #category : #'as yet unclassified' }
+MygGalaBoxElement >> resetAnimation [ 
+
+	self transformation: BlElementIdentityTransformation uniqueInstance
+]
+
+{ #category : #'as yet unclassified' }
+MygGalaBoxElement >> textChild [
+
+	| text |
+	text := BlTextElement new.
+	self childNamed: 'text' ifFound: [ self removeChildNamed: 'text' ].
+	self addChild: text as: 'text'.
+	text text: self positionInField asString asRopedText.
+
+	text text fontSize: 50.
+	text text fontName: 'Source Sans Pro'.
+]
+
+{ #category : #'as yet unclassified' }
 MygGalaBoxElement >> updateBackgroundColor [
 
 	| bg |
@@ -168,8 +204,8 @@ MygGalaBoxElement >> updateBackgroundColor [
 		
 		boardElement := self parent parent parent.
 		space := boardElement space.
-		size := space extent / 10.
-		"size := space extent / boardElement board width - boardElement firstChild layout cellSpacing."
+		size := space extent / boardElement board width
+		        - boardElement firstChild layout cellSpacing.
 		bg := bg scaledIntoFormOfSize: size ].
 	self background: bg
 ]
