@@ -59,11 +59,11 @@ GalgaManager >> launch [
 #        #
 #   m    #
 #        #
-# m    m #
+# m    b #
 #        #
+# b    m #
 #        #
-#        #
-#        #
+#    h   #
 #    @   #'
 			           fromPackage: MygGalaBoard  package) do: [ :each |
 			          each configured ]).
