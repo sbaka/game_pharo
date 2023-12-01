@@ -1,6 +1,9 @@
 Class {
 	#name : #MygGalaBullet,
-	#superclass : #MygGalaElement,
+	#superclass : #MygGalagaMovable,
+	#instVars : [
+		'facing'
+	],
 	#category : #'game_pharo'
 }
 
@@ -14,4 +17,15 @@ MygGalaBullet class >> textualMapCharacter [
 MygGalaBullet >> backgroundRepresentation [
 
 	^ MygGalaBoxElement bulletIcon 
+]
+
+{ #category : #initialization }
+MygGalaBullet >> initialize [ 
+
+	super initialize.
+]
+
+{ #category : #testing }
+MygGalaBullet >> isBullet [ 
+	^ true
 ]
