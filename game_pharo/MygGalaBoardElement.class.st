@@ -186,8 +186,8 @@ MygGalaBoardElement >> initializeBackgroundLayerPreview [
 MygGalaBoardElement >> initializeDirectionDict [
 
 	directionDict := {
-		        "(#DOWN -> CpDirection south).
-		        (#UP -> CpDirection north)."
+		        "(#DOWN -> CpDirection south)."
+		        "(#UP -> CpDirection north)."
 		        (#LEFT -> CpDirection west).
 		        (#RIGHT -> CpDirection east) } asDictionary.
 ]
@@ -266,15 +266,10 @@ MygGalaBoardElement >> initializeForegroundLayerPreview [
 { #category : #'as yet unclassified' }
 MygGalaBoardElement >> manageEvent: anEvent [
 
-	| player moved direction neighborElement elements |
-	anEvent key name = #SPACE ifTrue: [
-		self resetBoard.
-		^ self ].
-	anEvent key name = #ESCAPE ifTrue: [
-		self space close.
-		^ self ].
-	"board isFinished ifTrue: [ ^ self ]."
+	| player bullet moved movedBullet direction neighborElement elements |
+	
 	player := self board player.
+	bullet := self board bullet.
 	direction := self directionDict
 		             at: anEvent key name
 		             ifAbsent: [ ^ self ].
@@ -282,11 +277,25 @@ MygGalaBoardElement >> manageEvent: anEvent [
 		            elementsToUpdateAtPosition: player position
 		            goingIn: direction.
 	moved := player move: direction.
+	 	
+
+	"anEvent key name = #SPACE ifTrue: [
+		self resetBoard.
+		^ self ]."
+	anEvent key name = #ESCAPE ifTrue: [
+		self space close.
+		^ self ].
+	anEvent key name = #SPACE ifTrue: [
+		self board bullet move: CpDirection north.
+		"self board bullet fireBullet."
+		^ self ].
+	"board isFinished ifTrue: [ ^ self ]."
+		
 	player backgroundRepresentation.
 
 	neighborElement := elements second.
 
-	(moved and: [ neighborElement box class = MygGalaBoxElement ])
+	(moved  and: [ neighborElement box class = MygGalaBoxElement ])
 		ifTrue: [
 			| animation |
 			animation := neighborElement boxAnimationMovingInDirection:

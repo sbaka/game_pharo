@@ -3,6 +3,7 @@ Class {
 	#superclass : #MygBoard,
 	#instVars : [
 		'player',
+		'bullet',
 		'setPlayer',
 		'gameManager',
 		'ended'
@@ -68,6 +69,16 @@ MygGalaBoard >> atColumn: anInteger atRow: anInteger2 put: anElement [
 { #category : #'public api - configure' }
 MygGalaBoard >> atPosition: aCpPositionable [ 
 	^ (grid at: aCpPositionable x @ aCpPositionable y)
+]
+
+{ #category : #accessing }
+MygGalaBoard >> bullet [
+	^ bullet 
+]
+
+{ #category : #accessing }
+MygGalaBoard >> bullet: anBullet [
+	^ bullet := anBullet 
 ]
 
 { #category : #'public api - configure' }
