@@ -54,6 +54,12 @@ MygGalagaMovable >> moveEast [
 	^ self move: CpDirection east
 ]
 
+{ #category : #move }
+MygGalagaMovable >> moveNorth [
+
+	^ self move: CpDirection north
+]
+
 { #category : #accessing }
 MygGalagaMovable >> moveWest [
 

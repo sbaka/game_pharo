@@ -74,17 +74,17 @@ MygGalaBoardElement >> elementsToUpdateAtPosition: aPoint goingIn: aCpDirection 
 
 	| layer elements playerElement neighborElement nextNeighborElement |
 	layer := self foregroundLayer.
-	playerElement := (layer childNamed: aPoint asString) firstChild.
-	neighborElement := (layer childNamed:
+	playerElement := (layer childWithId: aPoint asString) firstChild.
+	neighborElement := (layer childWithId:
 		                    (aCpDirection * aPoint) asString) firstChild.
 	elements := {
 		            playerElement.
 		            neighborElement } asOrderedCollection.
 	(neighborElement board grid at: neighborElement positionInField)
 		class = MygGalaWall ifFalse: [
-		nextNeighborElement := (layer childNamed:
-			                       (aCpDirection * (aCpDirection * aPoint))
-				                       asString) firstChild.
+		nextNeighborElement := (layer childWithId:
+			                        (aCpDirection * (aCpDirection * aPoint))
+				                        asString) firstChild.
 		elements add: nextNeighborElement ].
 	^ elements
 ]
@@ -263,39 +263,63 @@ MygGalaBoardElement >> initializeForegroundLayerPreview [
 	self foregroundLayer: layer
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #event }
 MygGalaBoardElement >> manageEvent: anEvent [
 
-	| player bullet moved movedBullet direction neighborElement elements |
-	
-	player := self board player.
+	| player bullet moved direction neighborElement elements |
 	bullet := self board bullet.
+
+	anEvent key name = #SPACE ifTrue: [
+		| fired bulletNeighborhood bulletElements |
+		bulletElements := self
+			                  elementsToUpdateAtPosition: bullet position
+			                  goingIn: CpDirection north.
+		fired := bullet move: CpDirection north.
+
+		bulletNeighborhood := bulletElements second.
+
+		(fired and: [ bulletNeighborhood box class = MygGalaBoxElement ])
+			ifTrue: [
+				| animation |
+				animation := bulletNeighborhood boxAnimationMovingInDirection:
+					             CpDirection north.
+				bulletNeighborhood addAnimation: (animation onFinishedDo: [
+						 bulletNeighborhood resetAnimation.
+						 self updateElements: bulletElements ]) ]
+			ifFalse: [ self updateElements: bulletElements ].
+
+
+
+
+		^ self ].
+
+	player := self board player.
+
+	anEvent key name = #ESCAPE ifTrue: [ ^ self space close ].
+
 	direction := self directionDict
 		             at: anEvent key name
 		             ifAbsent: [ ^ self ].
+
 	elements := self
 		            elementsToUpdateAtPosition: player position
 		            goingIn: direction.
-	moved := player move: direction.
-	 	
 
+	moved := player move: direction.
 	"anEvent key name = #SPACE ifTrue: [
-		self resetBoard.
+		| bulletElement fired|
+		bulletElement := self
+			                 elementsToUpdateAtPosition: bullet position
+			                 goingIn: CpDirection north.
+		fired := bullet move: CpDirection north.
 		^ self ]."
-	anEvent key name = #ESCAPE ifTrue: [
-		self space close.
-		^ self ].
-	anEvent key name = #SPACE ifTrue: [
-		self board bullet move: CpDirection north.
-		"self board bullet fireBullet."
-		^ self ].
 	"board isFinished ifTrue: [ ^ self ]."
-		
-	player backgroundRepresentation.
+
+
 
 	neighborElement := elements second.
 
-	(moved  and: [ neighborElement box class = MygGalaBoxElement ])
+	(moved and: [ neighborElement box class = MygGalaBoxElement ])
 		ifTrue: [
 			| animation |
 			animation := neighborElement boxAnimationMovingInDirection:

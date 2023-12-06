@@ -56,8 +56,8 @@ MygGalaBoxElement class >> boxIconDarker [
 ]
 
 { #category : #'as yet unclassified' }
-MygGalaBoxElement class >> bulletIcon [ 
-		"Private - Generated method"
+MygGalaBoxElement class >> bulletIcon [
+	"Private - Generated method"
 
 	^ Icons at: #BulletIcon ifAbsentPut: [
 		  Form fromBinaryStream:
@@ -147,12 +147,12 @@ MygGalaBoxElement >> board [
 ]
 
 { #category : #accessing }
-MygGalaBoxElement >> board: aSkBoard [
+MygGalaBoxElement >> board: aGalaBoard [
 
-	board := aSkBoard.
+	board := aGalaBoard.
 
 	self
-		constraintsDo: [ :c | c horizontal matchParent ]
+		constraintsDo: [ :c | c vertical matchParent ]
 ]
 
 { #category : #accessing }
@@ -161,9 +161,9 @@ MygGalaBoxElement >> box [
 ]
 
 { #category : #accessing }
-MygGalaBoxElement >> box: aSkElement [
+MygGalaBoxElement >> box: aGalaElement [
 
-	box := aSkElement.
+	box := aGalaElement.
 ]
 
 { #category : #accessing }

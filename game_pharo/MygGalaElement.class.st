@@ -51,6 +51,11 @@ MygGalaElement >> configured [
 ]
 
 { #category : #initialization }
+MygGalaElement >> isBullet [
+	^ false
+]
+
+{ #category : #initialization }
 MygGalaElement >> isPlayer [
 	^ false
 ]

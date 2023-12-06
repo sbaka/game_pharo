@@ -86,7 +86,8 @@ MygGalaBoard >> configureGrid: aCTNewArray2D [
 
 	super configureGrid: aCTNewArray2D.
 	self
-		setPlayer.
+		setBullet;
+		setPlayer
 ]
 
 { #category : #enumerating }
@@ -108,9 +109,9 @@ MygGalaBoard >> gameManager [
 ]
 
 { #category : #'public api - configure' }
-MygGalaBoard >> gameManager: aSkGameManager [
+MygGalaBoard >> gameManager: aGalaGameManager [
 
-	gameManager:= aSkGameManager 
+	gameManager:= aGalaGameManager 
 ]
 
 { #category : #'public api - configure' }
@@ -135,6 +136,12 @@ MygGalaBoard >> player [
 MygGalaBoard >> reset [
 
 	self gameManager launchAgain
+]
+
+{ #category : #'public api - configure' }
+MygGalaBoard >> setBullet [
+
+	bullet := grid contents detect: #isBullet
 ]
 
 { #category : #'public api - configure' }

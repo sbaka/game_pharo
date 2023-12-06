@@ -65,7 +65,7 @@ GalgaManager >> launch [
 #        #
 #    h   #
 #    @   #'
-			           fromPackage: MygGalaBoard  package) do: [ :each |
+			           fromPackage: MygGalaBoard package) do: [ :each |
 			          each configured ]).
 	self currentBoardElement openWithModel: board
 ]
