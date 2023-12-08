@@ -72,20 +72,20 @@ MygGalaBoardElement >> directionDict [
 { #category : #'as yet unclassified' }
 MygGalaBoardElement >> elementsToUpdateAtPosition: aPoint goingIn: aCpDirection [
 
-	| layer elements playerElement neighborElement nextNeighborElement |
+	| layer elements movableElement neighborElement "nextNeighborElement" |
 	layer := self foregroundLayer.
-	playerElement := (layer childWithId: aPoint asString) firstChild.
+	movableElement := (layer childWithId: aPoint asString) firstChild.
 	neighborElement := (layer childWithId:
 		                    (aCpDirection * aPoint) asString) firstChild.
 	elements := {
-		            playerElement.
+		            movableElement.
 		            neighborElement } asOrderedCollection.
-	(neighborElement board grid at: neighborElement positionInField)
+	"(neighborElement board grid at: neighborElement positionInField)
 		class = MygGalaWall ifFalse: [
 		nextNeighborElement := (layer childWithId:
 			                        (aCpDirection * (aCpDirection * aPoint))
 				                        asString) firstChild.
-		elements add: nextNeighborElement ].
+		elements add: nextNeighborElement ]."
 	^ elements
 ]
 
@@ -107,8 +107,9 @@ MygGalaBoardElement >> initialize [
 	super initialize.
 	self initializeDirectionDict.
 	self
-		background: (BlBackground paint: Color veryLightGray);
+		background: (BlBackground paint: Color black);
 		layout: BlFrameLayout new;
+		constraintsDo: [ :c | c vertical matchParent ];
 		addEventHandlerOn: BlKeyDownEvent
 		do: [ :anEvent | self manageEvent: anEvent ];
 		requestFocus
@@ -268,7 +269,7 @@ MygGalaBoardElement >> manageEvent: anEvent [
 
 	| player bullet moved direction neighborElement elements |
 	bullet := self board bullet.
-
+	"Ici on bouge la balle vers le haut"
 	anEvent key name = #SPACE ifTrue: [
 		| fired bulletNeighborhood bulletElements |
 		bulletElements := self
@@ -287,10 +288,6 @@ MygGalaBoardElement >> manageEvent: anEvent [
 						 bulletNeighborhood resetAnimation.
 						 self updateElements: bulletElements ]) ]
 			ifFalse: [ self updateElements: bulletElements ].
-
-
-
-
 		^ self ].
 
 	player := self board player.

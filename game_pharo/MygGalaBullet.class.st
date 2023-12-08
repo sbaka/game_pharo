@@ -1,6 +1,9 @@
 Class {
 	#name : #MygGalaBullet,
 	#superclass : #MygGalagaMovable,
+	#instVars : [
+		'isFired'
+	],
 	#category : #'game_pharo'
 }
 
@@ -42,9 +45,10 @@ MygGalaBullet >> fireBullet [
 ]
 
 { #category : #initialization }
-MygGalaBullet >> initialize [ 
+MygGalaBullet >> initialize [
 
-	super initialize.
+	isFired := false.
+	super initialize
 ]
 
 { #category : #testing }
