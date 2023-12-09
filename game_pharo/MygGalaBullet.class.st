@@ -16,7 +16,9 @@ MygGalaBullet class >> textualMapCharacter [
 { #category : #accessing }
 MygGalaBullet >> backgroundRepresentation [
 
-	^ MygGalaBoxElement bulletIcon 
+	^ isFired
+		  ifTrue:  [ MygGalaBoxElement bulletIcon ]
+		  ifFalse: [ MygGalaBoxElement spaceIcon ]
 ]
 
 { #category : #initialization }
@@ -54,4 +56,16 @@ MygGalaBullet >> initialize [
 { #category : #testing }
 MygGalaBullet >> isBullet [ 
 	^ true
+]
+
+{ #category : #accessing }
+MygGalaBullet >> isFired [
+
+	^ isFired
+]
+
+{ #category : #accessing }
+MygGalaBullet >> isFired: aBoolean [
+
+	isFired := aBoolean
 ]

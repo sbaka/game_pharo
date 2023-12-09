@@ -272,6 +272,7 @@ MygGalaBoardElement >> manageEvent: anEvent [
 	"Ici on bouge la balle vers le haut"
 	anEvent key name = #SPACE ifTrue: [
 		| fired bulletNeighborhood bulletElements |
+		bullet isFired: true.
 		bulletElements := self
 			                  elementsToUpdateAtPosition: bullet position
 			                  goingIn: CpDirection north.
