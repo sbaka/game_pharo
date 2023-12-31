@@ -55,7 +55,7 @@ GalgaManager >> launch [
 	| board |
 	self currentBoardElement: MygGalaBoardElement new.
 	board := MygGalaBoard createWithBoard: ((MygLevelImporter
-			           fromString: '#m      m#
+			           fromString: '##########
 #        #
 #   m    #
 #        #

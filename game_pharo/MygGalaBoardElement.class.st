@@ -267,11 +267,12 @@ MygGalaBoardElement >> initializeForegroundLayerPreview [
 { #category : #event }
 MygGalaBoardElement >> manageEvent: anEvent [
 
-	| player bullet moved direction neighborElement elements |
+	| player bullet moved direction neighborElement elements bulletposition |
 	bullet := self board bullet.
+	bulletposition := bullet position.
 	"Ici on bouge la balle vers le haut"
 	anEvent key name = #SPACE ifTrue: [
-		| fired bulletNeighborhood bulletElements |
+		| fired bulletNeighborhood bulletElements|
 		bullet isFired: true.
 		bulletElements := self
 			                  elementsToUpdateAtPosition: bullet position
@@ -304,6 +305,9 @@ MygGalaBoardElement >> manageEvent: anEvent [
 		            goingIn: direction.
 
 	moved := player move: direction.
+	bullet position: (CpDirection north) * (player position).
+	bullet isFired: false.
+	self board updatePositionOf: bullet from: bulletposition.
 	"anEvent key name = #SPACE ifTrue: [
 		| bulletElement fired|
 		bulletElement := self
@@ -312,8 +316,6 @@ MygGalaBoardElement >> manageEvent: anEvent [
 		fired := bullet move: CpDirection north.
 		^ self ]."
 	"board isFinished ifTrue: [ ^ self ]."
-
-
 
 	neighborElement := elements second.
 
