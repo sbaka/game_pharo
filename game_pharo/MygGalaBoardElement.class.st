@@ -272,24 +272,17 @@ MygGalaBoardElement >> manageEvent: anEvent [
 	bulletposition := bullet position.
 	"Ici on bouge la balle vers le haut"
 	anEvent key name = #SPACE ifTrue: [
-		| fired bulletNeighborhood bulletElements|
+		| fired movingBulletProcess|
 		bullet isFired: true.
-		bulletElements := self
-			                  elementsToUpdateAtPosition: bullet position
-			                  goingIn: CpDirection north.
-		fired := bullet move: CpDirection north.
-
-		bulletNeighborhood := bulletElements second.
-
-		(fired and: [ bulletNeighborhood box class = MygGalaBoxElement ])
-			ifTrue: [
-				| animation |
-				animation := bulletNeighborhood boxAnimationMovingInDirection:
-					             CpDirection north.
-				bulletNeighborhood addAnimation: (animation onFinishedDo: [
-						 bulletNeighborhood resetAnimation.
-						 self updateElements: bulletElements ]) ]
-			ifFalse: [ self updateElements: bulletElements ].
+		fired:= true.
+		movingBulletProcess :=[|count|
+		count :=0.
+		[fired and: count <= 8 ] whileTrue: [
+			self moveBullet.
+			count:= count + 1.
+			(Delay forMilliseconds: 400) wait.
+		 ].
+	] fork.
 		^ self ].
 
 	player := self board player.
@@ -305,20 +298,8 @@ MygGalaBoardElement >> manageEvent: anEvent [
 		            goingIn: direction.
 
 	moved := player move: direction.
-	bullet position: (CpDirection north) * (player position).
-	bullet isFired: false.
-	self board updatePositionOf: bullet from: bulletposition.
-	"anEvent key name = #SPACE ifTrue: [
-		| bulletElement fired|
-		bulletElement := self
-			                 elementsToUpdateAtPosition: bullet position
-			                 goingIn: CpDirection north.
-		fired := bullet move: CpDirection north.
-		^ self ]."
-	"board isFinished ifTrue: [ ^ self ]."
-
+	self resetBulletPosition: bullet player: player.
 	neighborElement := elements second.
-
 	(moved and: [ neighborElement box class = MygGalaBoxElement ])
 		ifTrue: [
 			| animation |
@@ -328,6 +309,39 @@ MygGalaBoardElement >> manageEvent: anEvent [
 					 neighborElement resetAnimation.
 					 self updateElements: elements ]) ]
 		ifFalse: [ self updateElements: elements ]
+]
+
+{ #category : #initialization }
+MygGalaBoardElement >> moveBullet [
+
+	| player bullet bulletNeighborhood bulletElements fired bulletPosition  |
+	bullet := self board bullet.
+	player := self board player.
+	bulletPosition := bullet position.
+	bulletElements := self
+		                  elementsToUpdateAtPosition: bullet position
+		                  goingIn: CpDirection north.
+	fired := bullet move: CpDirection north.
+	
+	fired ifFalse: [
+		self resetBulletPosition: bullet player: player.
+		self updateElements: bulletElements.
+		^ self ].
+	
+	bulletNeighborhood := bulletElements second.
+.	
+	bulletNeighborhood class = MygGalaMonster ifTrue: [
+		|ground|
+			ground := MygGalaGround new.
+			ground board: bullet board.
+			ground position: bulletPosition.
+			self board atColumn: bulletNeighborhood position x atRow: bulletNeighborhood position y put: ground.
+			self updateElements: bulletElements.
+			^ self.
+			]
+		ifFalse:[
+		self updateElements: bulletElements 
+		]
 ]
 
 { #category : #'as yet unclassified' }
@@ -366,6 +380,19 @@ MygGalaBoardElement >> resetBoard [
 
 	self space close.
 	self board reset
+]
+
+{ #category : #initialization }
+MygGalaBoardElement >> resetBulletPosition: bullet player: player [
+|bulletPosition ground|
+	bulletPosition := bullet position.
+	bullet position: (CpDirection north) * (player position).
+	bullet isFired: false.
+
+	ground := MygGalaGround new.
+	ground board: bullet board.
+	ground position: bulletPosition.
+	self board atColumn: bulletPosition x  atRow: bulletPosition y put: ground.
 ]
 
 { #category : #'as yet unclassified' }

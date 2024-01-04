@@ -1,6 +1,6 @@
 Class {
 	#name : #MygGalaBlueMonster,
-	#superclass : #MygGalaElement,
+	#superclass : #MygGalaMonster,
 	#category : #'game_pharo'
 }
 
