@@ -15,3 +15,9 @@ MygGalaBlueMonster >> backgroundRepresentation [
 
 	^ MygGalaBoxElement blueMonsterIcon 
 ]
+
+{ #category : #testing }
+MygGalaBlueMonster >> isBlueMonster [
+
+	^ true
+]

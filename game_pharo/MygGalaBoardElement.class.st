@@ -3,6 +3,8 @@ Class {
 	#superclass : #BlElement,
 	#instVars : [
 		'board',
+		'redMonstersDirection',
+		'blueMonstersDirection',
 		'backgroundLayer',
 		'foregroundLayer',
 		'directionDict',
@@ -15,6 +17,32 @@ Class {
 MygGalaBoardElement class >> openWithModel: aGalaBoard [
 
 	self new openWithModel: aGalaBoard
+]
+
+{ #category : #monsters }
+MygGalaBoardElement >> animateBlueMonsters [
+
+	blueMonstersDirection := blueMonstersDirection printString
+	                        = CpDirection east  printString
+		                        ifTrue: [ CpDirection west  ]
+		                        ifFalse: [ CpDirection east ].
+	[
+	2 timesRepeat: [
+		self moveBlueMonsters: blueMonstersDirection.
+		(Delay forMilliseconds: 500) wait ] ] fork
+]
+
+{ #category : #monsters }
+MygGalaBoardElement >> animateRedMonsters [
+
+	redMonstersDirection := redMonstersDirection printString
+	                        = CpDirection north printString
+		                        ifTrue: [ CpDirection south ]
+		                        ifFalse: [ CpDirection north ].
+	[
+	2 timesRepeat: [
+		self moveRedMonsters: redMonstersDirection.
+		(Delay forMilliseconds: 500) wait ] ] fork
 ]
 
 { #category : #initialization }
@@ -106,13 +134,20 @@ MygGalaBoardElement >> initialize [
 
 	super initialize.
 	self initializeDirectionDict.
+	redMonstersDirection := CpDirection south.
 	self
 		background: (BlBackground paint: Color black);
 		layout: BlFrameLayout new;
 		constraintsDo: [ :c | c vertical matchParent ];
 		addEventHandlerOn: BlKeyDownEvent
 		do: [ :anEvent | self manageEvent: anEvent ];
-		requestFocus
+		requestFocus.
+
+	[
+	[ self board ended ] whileFalse:  [
+		self animateRedMonsters.
+		self animateBlueMonsters.
+		(Delay forMilliseconds: 1000) wait ] ] fork
 ]
 
 { #category : #initialization }
@@ -270,24 +305,26 @@ MygGalaBoardElement >> manageEvent: anEvent [
 	| player bullet moved direction neighborElement elements bulletposition |
 	bullet := self board bullet.
 	bulletposition := bullet position.
+
 	"Ici on bouge la balle vers le haut"
 	anEvent key name = #SPACE ifTrue: [
-		| fired movingBulletProcess|
+		| fired movingBulletProcess |
 		bullet isFired: true.
-		fired:= true.
-		movingBulletProcess :=[|count|
-		count :=0.
-		[fired and: count <= 8 ] whileTrue: [
-			self moveBullet.
-			count:= count + 1.
-			(Delay forMilliseconds: 400) wait.
-		 ].
-	] fork.
+		fired := true.
+		movingBulletProcess := [
+		                       | count |
+		                       count := 0.
+		                       [ fired and: count <= 8 ] whileTrue: [
+			                       self moveBullet.
+			                       count := count + 1.
+			                       (Delay forMilliseconds: 400) wait ] ] fork.
 		^ self ].
 
 	player := self board player.
 
-	anEvent key name = #ESCAPE ifTrue: [ ^ self space close ].
+	anEvent key name = #ESCAPE ifTrue: [
+		board ended: true.
+		^ self space close ].
 
 	direction := self directionDict
 		             at: anEvent key name
@@ -309,6 +346,25 @@ MygGalaBoardElement >> manageEvent: anEvent [
 					 neighborElement resetAnimation.
 					 self updateElements: elements ]) ]
 		ifFalse: [ self updateElements: elements ]
+]
+
+{ #category : #monsters }
+MygGalaBoardElement >> moveBlueMonsters: aCpDirection [
+
+	| blueMonsters blueMonsterElements blueMonsterPositions didblueMonsterMove |
+	blueMonsters := self board blueMonsters.
+	didblueMonsterMove := OrderedCollection new.
+	blueMonsterPositions := OrderedCollection new.
+	blueMonsterElements := OrderedCollection new.
+
+	blueMonsterPositions := blueMonsters collect: [ :each | each position ].
+	blueMonsterElements := blueMonsterPositions collect: [ :each |
+		                      self
+			                      elementsToUpdateAtPosition: each
+			                      goingIn: aCpDirection ].
+	didblueMonsterMove := blueMonsters collect: [ :each | each move: aCpDirection ].
+	blueMonsterElements do: [ :each | self updateElements: each ].
+	(Delay forSeconds: 0.1) wait
 ]
 
 { #category : #initialization }
@@ -345,18 +401,39 @@ MygGalaBoardElement >> moveBullet [
 ]
 
 { #category : #'as yet unclassified' }
-MygGalaBoardElement >> moveGalaSpaceShip: aSpaceShip direction: anEvt [ 
-|direction elements moved neighborElement| 
-2 timesRepeat: [     "Assuming 'move' is a method in your Player class that updates its position"   direction := self directionDict                      
-at: anEvt key name                      
-ifAbsent: [ ^ self ].     
-elements := self                     
-elementsToUpdateAtPosition: aSpaceShip position  
-goingIn: direction.     
-moved := aSpaceShip move: direction.
-neighborElement := elements second.    
-moved ifTrue: [self updateElements: elements ]. 
-  (Delay forSeconds: 0.1) wait.].
+MygGalaBoardElement >> moveGalaSpaceShip: aSpaceShip direction: anEvt [
+
+	| direction elements moved neighborElement |
+	2 timesRepeat: [ "Assuming 'move' is a method in your Player class that updates its position"
+		direction := self directionDict
+			             at: anEvt key name
+			             ifAbsent: [ ^ self ].
+		elements := self
+			            elementsToUpdateAtPosition: aSpaceShip position
+			            goingIn: direction.
+		moved := aSpaceShip move: direction.
+		neighborElement := elements second.
+		moved ifTrue: [ self updateElements: elements ].
+		(Delay forSeconds: 0.1) wait ]
+]
+
+{ #category : #monsters }
+MygGalaBoardElement >> moveRedMonsters: aCpDirection [
+
+	| redMonsters redMonsterElements redMonsterPositions didMonsterMove |
+	redMonsters := self board redMonsters.
+	didMonsterMove := OrderedCollection new.
+	redMonsterPositions := OrderedCollection new.
+	redMonsterElements := OrderedCollection new.
+
+	redMonsterPositions := redMonsters collect: [ :each | each position ].
+	redMonsterElements := redMonsterPositions collect: [ :each |
+		                      self
+			                      elementsToUpdateAtPosition: each
+			                      goingIn: aCpDirection ].
+	didMonsterMove := redMonsters collect: [ :each | each move: aCpDirection ].
+	redMonsterElements do: [ :each | self updateElements: each ].
+	(Delay forSeconds: 0.1) wait
 ]
 
 { #category : #'as yet unclassified' }

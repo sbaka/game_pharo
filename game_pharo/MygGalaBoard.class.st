@@ -3,6 +3,9 @@ Class {
 	#superclass : #MygBoard,
 	#instVars : [
 		'player',
+		'monsters',
+		'redMonsters',
+		'blueMonsters',
 		'bullet',
 		'setPlayer',
 		'gameManager',
@@ -72,6 +75,16 @@ MygGalaBoard >> atPosition: aCpPositionable [
 ]
 
 { #category : #accessing }
+MygGalaBoard >> blueMonsters [
+	^ blueMonsters 
+]
+
+{ #category : #accessing }
+MygGalaBoard >> blueMonsters: aBlueMonster [
+	^ blueMonsters  := aBlueMonster
+]
+
+{ #category : #accessing }
 MygGalaBoard >> bullet [
 	^ bullet 
 ]
@@ -87,6 +100,8 @@ MygGalaBoard >> configureGrid: aCTNewArray2D [
 	super configureGrid: aCTNewArray2D.
 	self
 		setBullet;
+		setBlueMonster;
+		setRedMonster;
 		setPlayer
 ]
 
@@ -100,6 +115,12 @@ MygGalaBoard >> do: aBlock [
 MygGalaBoard >> ended [ 
 
 	^ ended 
+]
+
+{ #category : #accessing }
+MygGalaBoard >> ended: aBoolean [
+
+	ended := aBoolean
 ]
 
 { #category : #'public api - configure' }
@@ -118,7 +139,19 @@ MygGalaBoard >> gameManager: aGalaGameManager [
 MygGalaBoard >> initialize [
 	super initialize.
 	ended := false.
-	
+	monsters := OrderedCollection new.	
+	redMonsters  := OrderedCollection new.
+	blueMonsters  := OrderedCollection new.
+]
+
+{ #category : #accessing }
+MygGalaBoard >> monsters [
+	^ monsters 
+]
+
+{ #category : #accessing }
+MygGalaBoard >> monsters: aMonster [
+	^ monsters  := aMonster
 ]
 
 { #category : #'public api - configure' }
@@ -132,10 +165,26 @@ MygGalaBoard >> player [
 	^ player
 ]
 
+{ #category : #accessing }
+MygGalaBoard >> redMonsters [
+	^ redMonsters 
+]
+
+{ #category : #accessing }
+MygGalaBoard >> redMonsters: aRedMonster [
+	^ redMonsters  := aRedMonster
+]
+
 { #category : #'public api - configure' }
 MygGalaBoard >> reset [
 
 	self gameManager launchAgain
+]
+
+{ #category : #'public api - configure' }
+MygGalaBoard >> setBlueMonster [
+
+	blueMonsters := grid contents select: #isBlueMonster
 ]
 
 { #category : #'public api - configure' }
@@ -145,9 +194,21 @@ MygGalaBoard >> setBullet [
 ]
 
 { #category : #'public api - configure' }
+MygGalaBoard >> setMonster [
+
+	monsters := grid contents select: #isMonster
+]
+
+{ #category : #'public api - configure' }
 MygGalaBoard >> setPlayer [
 
 	player := grid contents detect: #isPlayer
+]
+
+{ #category : #'public api - configure' }
+MygGalaBoard >> setRedMonster [
+
+	redMonsters := grid contents select: #isRedMonster
 ]
 
 { #category : #'public api - configure' }

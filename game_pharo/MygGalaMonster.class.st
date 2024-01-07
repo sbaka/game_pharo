@@ -1,5 +1,10 @@
 Class {
 	#name : #MygGalaMonster,
-	#superclass : #MygGalaElement,
+	#superclass : #MygGalagaMovable,
 	#category : #'game_pharo'
 }
+
+{ #category : #testing }
+MygGalaMonster >> isMonster [
+	^true 
+]

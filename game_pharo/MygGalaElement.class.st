@@ -50,14 +50,29 @@ MygGalaElement >> configured [
 	^self
 ]
 
+{ #category : #testing }
+MygGalaElement >> isBlueMonster [
+	^false
+]
+
 { #category : #initialization }
 MygGalaElement >> isBullet [
 	^ false
 ]
 
+{ #category : #testing }
+MygGalaElement >> isMonster [
+	^false
+]
+
 { #category : #initialization }
 MygGalaElement >> isPlayer [
 	^ false
+]
+
+{ #category : #testing }
+MygGalaElement >> isRedMonster [
+	^false
 ]
 
 { #category : #initialization }

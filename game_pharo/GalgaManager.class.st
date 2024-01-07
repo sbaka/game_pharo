@@ -57,12 +57,12 @@ GalgaManager >> launch [
 	board := MygGalaBoard createWithBoard: ((MygLevelImporter
 			           fromString: '##########
 #        #
-#   m    #
+#      b #
+# m      #
 #        #
-# m    b #
-#        #
-# b    m #
-#        #
+#   b    #
+#       m#
+#m       #
 #    h   #
 #    @   #'
 			           fromPackage: MygGalaBoard package) do: [ :each |
