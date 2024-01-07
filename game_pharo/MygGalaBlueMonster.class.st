@@ -1,6 +1,9 @@
 Class {
 	#name : #MygGalaBlueMonster,
 	#superclass : #MygGalaMonster,
+	#instVars : [
+		'isBlueMonster'
+	],
 	#category : #'game_pharo'
 }
 
@@ -16,7 +19,7 @@ MygGalaBlueMonster >> backgroundRepresentation [
 	^ MygGalaBoxElement blueMonsterIcon 
 ]
 
-{ #category : #testing }
+{ #category : #'as yet unclassified' }
 MygGalaBlueMonster >> isBlueMonster [
 
 	^ true

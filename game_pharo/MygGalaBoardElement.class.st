@@ -3,6 +3,7 @@ Class {
 	#superclass : #BlElement,
 	#instVars : [
 		'board',
+		'monsterMovementInitialized',
 		'redMonstersDirection',
 		'blueMonstersDirection',
 		'backgroundLayer',
@@ -134,20 +135,14 @@ MygGalaBoardElement >> initialize [
 
 	super initialize.
 	self initializeDirectionDict.
-	redMonstersDirection := CpDirection south.
+	monsterMovementInitialized := false.
 	self
 		background: (BlBackground paint: Color black);
 		layout: BlFrameLayout new;
 		constraintsDo: [ :c | c vertical matchParent ];
 		addEventHandlerOn: BlKeyDownEvent
 		do: [ :anEvent | self manageEvent: anEvent ];
-		requestFocus.
-
-	[
-	[ self board ended ] whileFalse:  [
-		self animateRedMonsters.
-		self animateBlueMonsters.
-		(Delay forMilliseconds: 1000) wait ] ] fork
+		requestFocus
 ]
 
 { #category : #initialization }
@@ -180,8 +175,6 @@ MygGalaBoardElement >> initializeBackgroundLayer [
 			clipChildren: false.
 		layer addChild: container.
 		boxElement updateBackgroundColor ].
-
-	self backgroundLayer: layer
 ]
 
 { #category : #initialization }
@@ -303,6 +296,13 @@ MygGalaBoardElement >> initializeForegroundLayerPreview [
 MygGalaBoardElement >> manageEvent: anEvent [
 
 	| player bullet moved direction neighborElement elements bulletposition |
+	monsterMovementInitialized ifFalse: [
+		monsterMovementInitialized := true.
+		[
+		[ self board ended ] whileFalse: [
+			self animateRedMonsters.
+			self animateBlueMonsters.
+			(Delay forMilliseconds: 1000) wait ] ] fork ].
 	bullet := self board bullet.
 	bulletposition := bullet position.
 
