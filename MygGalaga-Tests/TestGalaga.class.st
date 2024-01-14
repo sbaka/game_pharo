@@ -1,7 +1,7 @@
 Class {
 	#name : #TestGalaga,
 	#superclass : #TestCase,
-	#category : #'game_pharo_tests'
+	#category : #'MygGalaga-Tests'
 }
 
 { #category : #tests }
@@ -117,7 +117,7 @@ TestGalaga >> testPositionOfMonstrerInTheBoard [
 { #category : #tests }
 TestGalaga >> testPositionOfPlayerDontPassTheLimitOfBoard [
 
-	| board position |
+	| board  |
 		board := MygGalaBoard createWithBoard: ((MygLevelImporter
 			           fromString: '##########
 #        #
