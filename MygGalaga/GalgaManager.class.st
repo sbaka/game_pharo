@@ -13,7 +13,9 @@ Class {
 GalgaManager class >> importFromString: aString [
 
 	| tmp |
-	tmp := MygLevelImporter fromString: aString fromPackage: MygGalaBoard package.
+	tmp := MygLevelImporter
+		       fromString: aString
+		       fromPackage: MygGalaBoard package.
 	tmp := tmp collect: [ :each | each configured ].
 	tmp width < tmp height ifTrue: [ tmp := tmp rotateLeft ].
 	^ tmp
@@ -27,26 +29,27 @@ GalgaManager >> currentBoardElement [
 
 { #category : #accessing }
 GalgaManager >> currentBoardElement: aGalaBoardElement [
-	currentBoardElement := aGalaBoardElement 
+
+	currentBoardElement := aGalaBoardElement
 ]
 
 { #category : #accessing }
-GalgaManager >> currentMoveCount [ 
-	
-	^ currentMoveCount 
+GalgaManager >> currentMoveCount [
+
+	^ currentMoveCount
 ]
 
 { #category : #accessing }
 GalgaManager >> currentMoveCount: aNumber [
 
-	currentMoveCount:= aNumber 
+	currentMoveCount := aNumber
 ]
 
 { #category : #accessing }
 GalgaManager >> initialize [
 
 	super initialize.
-	currentMoveCount := 0.
+	currentMoveCount := 0
 ]
 
 { #category : #private }
@@ -71,7 +74,7 @@ GalgaManager >> launch [
 ]
 
 { #category : #accessing }
-GalgaManager >> menu [ 
+GalgaManager >> menu [
 
 	^ menu
 ]

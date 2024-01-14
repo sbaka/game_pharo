@@ -20,7 +20,7 @@ MygGalagaMovable >> background: anObject [
 ]
 
 { #category : #accessing }
-MygGalagaMovable >> board: aBoard [ 
+MygGalagaMovable >> board: aBoard [
 
 	super board: aBoard.
 	self background board: aBoard
@@ -36,7 +36,7 @@ MygGalagaMovable >> configured [
 { #category : #accessing }
 MygGalagaMovable >> defaultBackground [
 
-	^ MygGalaGround  new
+	^ MygGalaGround new
 ]
 
 { #category : #accessing }

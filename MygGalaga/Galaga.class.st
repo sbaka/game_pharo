@@ -11,8 +11,7 @@ Galaga class >> actionButton: aLable onClick: aBlock [
 	container := BlElement new
 		             layout: BlFrameLayout new;
 		             size: 50 @ 80;
-		             constraintsDo: [ :c |
-			             c horizontal matchParent.].
+		             constraintsDo: [ :c | c horizontal matchParent ].
 
 	btn := ToButton new first: aLable.
 	btn whenClickedDo: aBlock.
@@ -43,6 +42,7 @@ Galaga class >> container [
 { #category : #'instance creation' }
 Galaga class >> open [
 	"This lets us run the game by clicking the icon next to open"
+
 	<script>
 	| space startBtn container closeBtn btnContainer |
 	space := BlSpace new.

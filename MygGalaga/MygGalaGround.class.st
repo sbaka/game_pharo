@@ -6,11 +6,12 @@ Class {
 
 { #category : #'default encoding' }
 MygGalaGround class >> textualMapCharacter [
-	^ Character space.
+
+	^ Character space
 ]
 
 { #category : #accessing }
 MygGalaGround >> backgroundRepresentation [
 
-	^ MygGalaBoxElement spaceIcon  
+	^ MygGalaBoxElement spaceIcon
 ]

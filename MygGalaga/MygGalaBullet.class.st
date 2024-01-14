@@ -17,7 +17,7 @@ MygGalaBullet class >> textualMapCharacter [
 MygGalaBullet >> backgroundRepresentation [
 
 	^ isFired
-		  ifTrue:  [ MygGalaBoxElement bulletIcon ]
+		  ifTrue: [ MygGalaBoxElement bulletIcon ]
 		  ifFalse: [ MygGalaBoxElement spaceIcon ]
 ]
 
@@ -54,7 +54,8 @@ MygGalaBullet >> initialize [
 ]
 
 { #category : #testing }
-MygGalaBullet >> isBullet [ 
+MygGalaBullet >> isBullet [
+
 	^ true
 ]
 

@@ -13,5 +13,5 @@ MygGalaRedMonster class >> textualMapCharacter [
 { #category : #accessing }
 MygGalaRedMonster >> backgroundRepresentation [
 
-	^ MygGalaBoxElement redMonsterIcon 
+	^ MygGalaBoxElement redMonsterIcon
 ]

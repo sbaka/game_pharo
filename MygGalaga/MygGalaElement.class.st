@@ -5,7 +5,7 @@ Class {
 }
 
 { #category : #initialization }
-MygGalaElement class >> configured [ 
+MygGalaElement class >> configured [
 
 	^ self new configured
 ]
@@ -19,7 +19,7 @@ MygGalaElement class >> textualMapCharacter [
 { #category : #initialization }
 MygGalaElement >> basicPosition: aPosition [
 	"A position is a x,y kind of object."
-	
+
 	position := aPosition
 ]
 
@@ -29,34 +29,35 @@ MygGalaElement >> bringIn: aGalagaMovable going: aDirection [
 
 	| previousPosition |
 	previousPosition := aGalagaMovable position.
-	aGalagaMovable  basicPosition: self position.
+	aGalagaMovable basicPosition: self position.
 	self board gameManager ifNotNil: [
 		self board gameManager currentMoveCount:
 			self board gameManager currentMoveCount + 1 ].
-	self board updatePositionOf: aGalagaMovable  from: previousPosition.
+	self board updatePositionOf: aGalagaMovable from: previousPosition.
 	^ true
 ]
 
 { #category : #initialization }
 MygGalaElement >> configureBoard: aBoard [
 
-	self board: aBoard.
-	
+	self board: aBoard
 ]
 
 { #category : #initialization }
-MygGalaElement >> configured [ 
+MygGalaElement >> configured [
 
-	^self
+	^ self
 ]
 
 { #category : #initialization }
 MygGalaElement >> isBullet [
+
 	^ false
 ]
 
 { #category : #initialization }
 MygGalaElement >> isPlayer [
+
 	^ false
 ]
 
@@ -64,7 +65,7 @@ MygGalaElement >> isPlayer [
 MygGalaElement >> moveIn: aNeighbor going: aDirection [
 	"To move in a position, we ask the entity where we want to get in to decide.
 	This is not a double dispatch per se because we do not have to discrimnate on the receiver."
-	
+
 	^ aNeighbor bringIn: self going: aDirection
 ]
 
@@ -75,7 +76,7 @@ MygGalaElement >> postCreationAction [
 ]
 
 { #category : #initialization }
-MygGalaElement >> printOn: aStream [ 
+MygGalaElement >> printOn: aStream [
 
 	super printOn: aStream.
 	aStream nextPut: $-.

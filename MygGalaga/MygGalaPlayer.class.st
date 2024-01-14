@@ -8,36 +8,39 @@ Class {
 }
 
 { #category : #'default encoding' }
-MygGalaPlayer class >> textualMapCharacter [ 
+MygGalaPlayer class >> textualMapCharacter [
+
 	^ $@
 ]
 
 { #category : #accessing }
 MygGalaPlayer >> backgroundRepresentation [
-^ MygGalaBoxElement spaceShipIcon.
+
+	^ MygGalaBoxElement spaceShipIcon
 ]
 
 { #category : #accessing }
-MygGalaPlayer >> facing [ 
+MygGalaPlayer >> facing [
 
 	^ facing
 ]
 
 { #category : #accessing }
 MygGalaPlayer >> facing: aCpDirection [
-	
-	facing := aCpDirection 
+
+	facing := aCpDirection
 ]
 
 { #category : #initialization }
-MygGalaPlayer >> initialize [ 
+MygGalaPlayer >> initialize [
 
 	super initialize.
 	facing := CpEastDirection
 ]
 
 { #category : #initialization }
-MygGalaPlayer >> isPlayer [ 
+MygGalaPlayer >> isPlayer [
+
 	^ true
 ]
 

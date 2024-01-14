@@ -19,7 +19,7 @@ MygGalaBoardElement class >> openWithModel: aGalaBoard [
 ]
 
 { #category : #initialization }
-MygGalaBoardElement >> backgroundLayer [ 
+MygGalaBoardElement >> backgroundLayer [
 
 	^ backgroundLayer
 ]
@@ -27,7 +27,7 @@ MygGalaBoardElement >> backgroundLayer [
 { #category : #initialization }
 MygGalaBoardElement >> backgroundLayer: aBlElement [
 
-	backgroundLayer := aBlElement 
+	backgroundLayer := aBlElement
 ]
 
 { #category : #initialization }
@@ -132,7 +132,7 @@ MygGalaBoardElement >> initializeBackgroundLayer [
 	self board do: [ :aBox |
 		| boxElement tmpBox container |
 		tmpBox := aBox.
-		
+
 		boxElement := (MygGalaBoxElement box: tmpBox)
 			              positionInField: aBox position;
 			              board: board.
@@ -143,7 +143,7 @@ MygGalaBoardElement >> initializeBackgroundLayer [
 				             c horizontal matchParent.
 				             c vertical fitContent ];
 			             addChild: boxElement;
-			clipChildren: false.
+			             clipChildren: false.
 		layer addChild: container.
 		boxElement updateBackgroundColor ].
 
@@ -156,8 +156,7 @@ MygGalaBoardElement >> initializeBackgroundLayerPreview [
 	| layer |
 	layer := BlElement new
 		         background: Color transparent;
-		         layout: (BlGridLayout horizontal
-				          columnCount: board width);
+		         layout: (BlGridLayout horizontal columnCount: board width);
 		         constraintsDo: [ :c |
 			         c horizontal matchParent.
 			         c vertical fitContent ].
@@ -188,10 +187,10 @@ MygGalaBoardElement >> initializeBackgroundLayerPreview [
 MygGalaBoardElement >> initializeDirectionDict [
 
 	directionDict := {
-		        "(#DOWN -> CpDirection south)."
-		        "(#UP -> CpDirection north)."
-		        (#LEFT -> CpDirection west).
-		        (#RIGHT -> CpDirection east) } asDictionary.
+		                 (#LEFT -> CpDirection west).
+		                 (#RIGHT -> CpDirection east) } asDictionary
+	"(#DOWN -> CpDirection south)."
+	"(#UP -> CpDirection north)."
 ]
 
 { #category : #initialization }
@@ -209,9 +208,8 @@ MygGalaBoardElement >> initializeForegroundLayer [
 	self addChild: layer.
 	self board do: [ :aBox |
 		| boxElement tmpBox container |
-		
 		tmpBox := aBox.
-		
+
 		boxElement := (MygGalaBoxElement box: tmpBox)
 			              positionInField: aBox position;
 			              board: board.
@@ -222,7 +220,7 @@ MygGalaBoardElement >> initializeForegroundLayer [
 				             c horizontal matchParent.
 				             c vertical fitContent ];
 			             addChild: boxElement;
-			clipChildren: false.
+			             clipChildren: false.
 
 		layer addChild: container as: aBox position asString.
 		boxElement updateBackgroundColor ].
@@ -236,8 +234,7 @@ MygGalaBoardElement >> initializeForegroundLayerPreview [
 	| layer |
 	layer := BlElement new
 		         background: Color transparent;
-		         layout: (BlGridLayout horizontal
-				          columnCount: board width);
+		         layout: (BlGridLayout horizontal columnCount: board width);
 		         constraintsDo: [ :c |
 			         c horizontal matchParent.
 			         c vertical fitContent ].
@@ -245,9 +242,9 @@ MygGalaBoardElement >> initializeForegroundLayerPreview [
 	self board do: [ :aBox |
 		| boxElement tmpBox container |
 		tmpBox := aBox.
-		(aBox class inheritsFrom: MygGalagaMovable ) ifFalse: [
-			tmpBox := MygGalaGround  new ].
-		boxElement := (MygGalaBoxElement  box: tmpBox)
+		(aBox class inheritsFrom: MygGalagaMovable) ifFalse: [
+			tmpBox := MygGalaGround new ].
+		boxElement := (MygGalaBoxElement box: tmpBox)
 			              positionInField: aBox position;
 			              board: board.
 		container := BlElement new
@@ -319,7 +316,7 @@ MygGalaBoardElement >> manageEvent: anEvent [
 { #category : #initialization }
 MygGalaBoardElement >> moveBullet [
 
-	| player bullet bulletNeighborhood bulletElements fired bulletPosition  |
+	| player bullet bulletNeighborhood bulletElements fired bulletPosition |
 	bullet := self board bullet.
 	player := self board player.
 	bulletPosition := bullet position.
@@ -327,26 +324,26 @@ MygGalaBoardElement >> moveBullet [
 		                  elementsToUpdateAtPosition: bullet position
 		                  goingIn: CpDirection north.
 	fired := bullet move: CpDirection north.
-	
+
 	fired ifFalse: [
 		self resetBulletPosition: bullet player: player.
 		self updateElements: bulletElements.
 		^ self ].
-	
+
 	bulletNeighborhood := bulletElements second.
-.	
-	bulletNeighborhood class = MygGalaMonster ifTrue: [
-		|ground|
+	bulletNeighborhood class = MygGalaMonster
+		ifTrue: [
+			| ground |
 			ground := MygGalaGround new.
 			ground board: bullet board.
 			ground position: bulletPosition.
-			self board atColumn: bulletNeighborhood position x atRow: bulletNeighborhood position y put: ground.
+			self board
+				atColumn: bulletNeighborhood position x
+				atRow: bulletNeighborhood position y
+				put: ground.
 			self updateElements: bulletElements.
-			^ self.
-			]
-		ifFalse:[
-		self updateElements: bulletElements 
-		]
+			^ self ]
+		ifFalse: [ self updateElements: bulletElements ]
 ]
 
 { #category : #'as yet unclassified' }
@@ -412,15 +409,19 @@ MygGalaBoardElement >> resetBoard [
 
 { #category : #initialization }
 MygGalaBoardElement >> resetBulletPosition: bullet player: player [
-|bulletPosition ground|
+
+	| bulletPosition ground |
 	bulletPosition := bullet position.
-	bullet position: (CpDirection north) * (player position).
+	bullet position: CpDirection north * player position.
 	bullet isFired: false.
 
 	ground := MygGalaGround new.
 	ground board: bullet board.
 	ground position: bulletPosition.
-	self board atColumn: bulletPosition x  atRow: bulletPosition y put: ground.
+	self board
+		atColumn: bulletPosition x
+		atRow: bulletPosition y
+		put: ground
 ]
 
 { #category : #initialization }
@@ -431,7 +432,8 @@ MygGalaBoardElement >> score [
 
 { #category : #initialization }
 MygGalaBoardElement >> score: anInteger [
-	score := anInteger.
+
+	score := anInteger
 ]
 
 { #category : #'as yet unclassified' }
@@ -442,10 +444,12 @@ MygGalaBoardElement >> updateElements: anOrderedCollection [
 
 { #category : #initialization }
 MygGalaBoardElement >> updateScoreElement [
-	|space|
-	 space := ((self parent childAt: 2) childAt: 1).
-	 space text: (self score asRopedText
-						              fontName: 'Phosphate';
-						              fontSize: 24);
-				             background: Color green.
+
+	| space |
+	space := (self parent childAt: 2) childAt: 1.
+	space
+		text: (self score asRopedText
+				 fontName: 'Phosphate';
+				 fontSize: 24);
+		background: Color green
 ]

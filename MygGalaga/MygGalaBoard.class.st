@@ -14,9 +14,9 @@ Class {
 { #category : #initialization }
 MygGalaBoard class >> createWithBoard: aCTNewArray2D [
 
-	^ self new 
-		configureGrid: aCTNewArray2D; 
-		yourself 
+	^ self new
+		  configureGrid: aCTNewArray2D;
+		  yourself
 ]
 
 { #category : #'as yet unclassified' }
@@ -29,17 +29,17 @@ MygGalaBoard class >> createWithBoard: aCTNewArray2D managedBy: aSkGameManager [
 
 { #category : #'as yet unclassified' }
 MygGalaBoard class >> importFromString: aString [
-	|tmp|
+
+	| tmp |
 	tmp := MygLevelImporter fromString: aString fromPackage: self package.
 	tmp width < tmp height ifTrue: [ tmp := tmp rotateLeft ].
 	^ tmp
 ]
 
 { #category : #'public api - configure' }
-MygGalaBoard >> asciiString [ 
+MygGalaBoard >> asciiString [
 
-	^ String streamContents: [ :st |
-		self printOn: st ]	
+	^ String streamContents: [ :st | self printOn: st ]
 ]
 
 { #category : #'public api - configure' }
@@ -67,18 +67,21 @@ MygGalaBoard >> atColumn: anInteger atRow: anInteger2 put: anElement [
 ]
 
 { #category : #'public api - configure' }
-MygGalaBoard >> atPosition: aCpPositionable [ 
-	^ (grid at: aCpPositionable x @ aCpPositionable y)
+MygGalaBoard >> atPosition: aCpPositionable [
+
+	^ grid at: aCpPositionable x @ aCpPositionable y
 ]
 
 { #category : #accessing }
 MygGalaBoard >> bullet [
-	^ bullet 
+
+	^ bullet
 ]
 
 { #category : #accessing }
 MygGalaBoard >> bullet: anBullet [
-	^ bullet := anBullet 
+
+	^ bullet := anBullet
 ]
 
 { #category : #'public api - configure' }
@@ -97,28 +100,28 @@ MygGalaBoard >> do: aBlock [
 ]
 
 { #category : #'public api - configure' }
-MygGalaBoard >> ended [ 
+MygGalaBoard >> ended [
 
-	^ ended 
+	^ ended
 ]
 
 { #category : #'public api - configure' }
-MygGalaBoard >> gameManager [ 
-	
-	^ gameManager 
+MygGalaBoard >> gameManager [
+
+	^ gameManager
 ]
 
 { #category : #'public api - configure' }
 MygGalaBoard >> gameManager: aGalaGameManager [
 
-	gameManager:= aGalaGameManager 
+	gameManager := aGalaGameManager
 ]
 
 { #category : #'public api - configure' }
 MygGalaBoard >> initialize [
+
 	super initialize.
-	ended := false.
-	
+	ended := false
 ]
 
 { #category : #'public api - configure' }
@@ -129,6 +132,7 @@ MygGalaBoard >> moveSteps: aCollectionOfDirection [
 
 { #category : #'public api - configure' }
 MygGalaBoard >> player [
+
 	^ player
 ]
 
@@ -159,17 +163,18 @@ MygGalaBoard >> updatePositionOf: aGalagaMovable from: previousPosition [
 		atRow: previousPosition y
 		put: aGalagaMovable background.
 	"put the current position element as previous background of the moving element."
-	aGalagaMovable background:
-		(self atColumn: aGalagaMovable position x atRow: aGalagaMovable position y).
+	aGalagaMovable background: (self
+			 atColumn: aGalagaMovable position x
+			 atRow: aGalagaMovable position y).
 	"finally place the moving element to its new location"
 	self
 		atColumn: aGalagaMovable position x
 		atRow: aGalagaMovable position y
-		put: aGalagaMovable.
-	
+		put: aGalagaMovable
 ]
 
 { #category : #accessing }
 MygGalaBoard >> width [
+
 	^ grid width
 ]

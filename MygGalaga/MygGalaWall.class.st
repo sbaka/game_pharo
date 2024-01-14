@@ -13,12 +13,12 @@ MygGalaWall class >> textualMapCharacter [
 { #category : #accessing }
 MygGalaWall >> backgroundRepresentation [
 
-	^ MygGalaBoxElement spaceIcon.
+	^ MygGalaBoxElement spaceIcon
 ]
 
 { #category : #accessing }
 MygGalaWall >> bringIn: anActor going: aDirection [
 	"anActor does not move in a wall. Nothing enter a wall."
-	
+
 	^ false
 ]
